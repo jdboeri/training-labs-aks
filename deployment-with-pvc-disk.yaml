@@ -3,7 +3,7 @@ kind: Deployment
 metadata:
   name: flightbookingsystemsample
 spec:
-  replicas: 3
+  replicas: 1
   selector:
     matchLabels:
       app: flightbookingsystemsample
@@ -34,7 +34,14 @@ spec:
             port: 8080
             path: /FlightBookingSystemSample
           initialDelaySeconds: 10
-          periodSeconds: 5          
+          periodSeconds: 5
+        volumeMounts:
+        - mountPath: "/storage"
+          name: volume
+      volumes:
+        - name: volume
+          persistentVolumeClaim:
+            claimName: azure-managed-disk
 ---
 apiVersion: v1
 kind: Service
